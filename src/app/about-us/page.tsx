@@ -16,16 +16,16 @@ const AboutPage: NextPage = () => {
           <h1 className="text-2xl font-bold mb-4 text-center">About Us</h1>
           <div className="text-gray-950 font-medium bg-slate-50 p-10 rounded">
             <p className="mb-4">
-              Welcome to LY STORE, your premier online marketplace for discovering and purchasing top-quality products. We're committed to providing you with a seamless shopping experience, offering an extensive selection of products to meet your diverse needs.
+              Welcome to LY STORE, your premier online marketplace for discovering and purchasing top-quality products. We are committed to providing you with a seamless shopping experience, offering an extensive selection of products to meet your diverse needs.
             </p>
             <p className="mb-4">
-              At LY STORE, we're passionate about connecting customers with high-quality products that enhance their lives. Whether you're in search of stylish fashion items, innovative gadgets, or practical home essentials, we have everything you need to elevate your lifestyle.
+              At LY STORE, we are passionate about connecting customers with high-quality products that enhance their lives. Whether you are in search of stylish fashion items, innovative gadgets, or practical home essentials, we have everything you need to elevate your lifestyle.
             </p>
             <p className="mb-4">
-              Our dedicated team strives to ensure your satisfaction by providing exceptional customer service and reliable product information. We're here to assist you every step of the way, from browsing our extensive collection to making secure transactions.
+              Our dedicated team strives to ensure your satisfaction by providing exceptional customer service and reliable product information. We are here to assist you every step of the way, from browsing our extensive collection to making secure transactions.
             </p>
             <p className="mb-4">
-              Thank you for choosing LY STORE as your trusted online shopping destination. We're excited to serve you and look forward to being a part of your shopping journey. Start exploring our curated selection today and experience the convenience and quality that LY STORE has to offer!
+              Thank you for choosing LY STORE as your trusted online shopping destination. We are excited to serve you and look forward to being a part of your shopping journey. Start exploring our curated selection today and experience the convenience and quality that LY STORE has to offer!
             </p>
           </div>
         </div>
@@ -34,10 +34,10 @@ const AboutPage: NextPage = () => {
           <h1 className="text-2xl font-bold mb-4 text-center">About Us</h1>
           <div>
             <p className="mb-4">
-              Welcome to LY STORE, your premier online marketplace for discovering and purchasing top-quality products. We're committed to providing you with a seamless shopping experience, offering an extensive selection of products to meet your diverse needs.
+              Welcome to LY STORE, your premier online marketplace for discovering and purchasing top-quality products. We are committed to providing you with a seamless shopping experience, offering an extensive selection of products to meet your diverse needs.
             </p>
             <p className="mb-4">
-              At LY STORE, we're passionate about connecting customers with high-quality products that enhance their lives. Whether you're in search of stylish fashion items, innovative gadgets, or practical home essentials, we have everything you need to elevate your lifestyle.
+              At LY STORE, we are passionate about connecting customers with high-quality products that enhance their lives. Whether you are in search of stylish fashion items, innovative gadgets, or practical home essentials, we have everything you need to elevate your lifestyle.
             </p>
           </div>
         </div>
