@@ -6,7 +6,6 @@ import { ProductType } from "@/types/product";
 import Link from "next/link";
 import { Pagination } from "flowbite-react";
 import { useState, useEffect } from "react";
-import SlideSection from "@/components/slide/page";
 
 async function fetchProducts(page: number) {
   const products = await fetch(`https://store.istad.co/api/products/?limit=1&page=${page}`, {
@@ -31,13 +30,12 @@ export default function Home() {
   const onPageChange = async (page: number) => {
     setCurrentPage(page);
   };
-  
+
   return (
     <>
-      <SlideSection/>
-      <h2 className="mt-10 text-3xl font-bold text-center">Product</h2>
+      <h1 className="mt-10 text-3xl font-bold text-center">Product</h1>
       <div className="mt-10 flex justify-center flex-wrap ">
-          <div className=" mt-10 grid grid-cols-4 gap-6 max-md:grid-cols-1 max-md:ml-11  max-xl:grid-cols-2 max-2xl:grid-cols-3 ">
+          <div className=" mt-10 grid grid-cols-4  gap-6  max-md:grid-cols-1  max-xl:grid-cols-2 max-2xl:grid-cols-3 ">
           <Suspense fallback={<LoadingComponent />}>
             {products && products.map((product: ProductType) => (
               <Link href={`/product/${product.id}`} key={product.id}>
@@ -53,8 +51,8 @@ export default function Home() {
           </div>
          
       </div>
-      <div className=" flex justify-stard ml-28 mt-20">
-          <Pagination currentPage={currentPage} totalPages={10} onPageChange={onPageChange} />
+      <div className=" flex justify-stard ml-28 mt-20 max-md:ml-11">
+          <Pagination currentPage={currentPage} totalPages={100} onPageChange={onPageChange} />
       </div>
     </>
   );
