@@ -75,11 +75,11 @@ export default function App() {
             Dashboard
           </Button>
         </NavbarItem>
-        <NavbarItem  className="hidden lg:flex">
+        {/* <NavbarItem  className="hidden lg:flex">
           <Button as={Link} className="font-medium font-roboto  px-5 py-2 border-2 border-blue-600 rounded-full text-white bg-blue-600 transition duration-500 hover:text-blue-600 hover:bg-white" href="/login" variant="flat">
           Get Started
           </Button>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
 
       <NavbarMenu>

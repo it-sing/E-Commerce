@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import * as Yup from "yup";
 import Image from "next/image";
 import axios from "axios";
@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
     .test("fileSize", "File too large", (value: any) => {
       if (!value) {
         return true;
-      }3
+      }
       return value.size <= FILE_SIZE;
     })
     .test("fileFormat", "Unsupported Format", (value: any) => {
@@ -26,70 +26,57 @@ const validationSchema = Yup.object().shape({
         return true;
       }
       return SUPPORTED_FORMATS.includes(value.type);
-    })
-    .required("Required"),
+    }),
+  name: Yup.string().required("Required"),
+  category: Yup.string().required("Required"),
+  price: Yup.number().required("Required"),
+  quantity: Yup.number().required("Required"),
+  desc: Yup.string().required("Required"),
 });
 
-const CreateProductForm = () => {
+const UpdateProductForm = ({ productId, initialValues }: { productId: string, initialValues: any }) => {
   const handleSubmitToServer = async (values: any) => {
-    // axios is used to make HTTP requests to the server
     try {
-      const response = await axios.post(
-        `${base_URI_Api}file/product/`,
-        values.image
-      );
+      const response = await axios.post(`${base_URI_Api}/upload`, values.image);
       return response.data.image;
     } catch (error) {
       console.log(error);
     }
-  }
-  const handleCreateProduct = async (values: any, imageData: any) => {
+  };
+
+  const handleUpdateProduct = async (values: any, imageData: any) => {
     try {
       const imageUrl = await handleSubmitToServer(imageData);
-      console.log("data: ", values);
-      const postData = await fetch(`${base_URI_Api}products/`, {
-        method: "POST",
+      const response = await fetch(`${base_URI_Api}/${productId}`, {
+        method: "PUT",
         headers: myHeaders,
         body: JSON.stringify({
           ...values,
-          image: imageUrl,
+          image: imageUrl || values.image, // Use existing image if new image is not uploaded
         }),
       });
-      console.log("post data: ", postData);
+      console.log("Updated data: ", response);
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   return (
     <div className="w-full pt-9">
       <Formik
-         onSubmit={(values: any, { setSubmitting, resetForm }) => {
-          console.log(values);
+        onSubmit={(values: any, { setSubmitting, resetForm }) => {
           const formData = new FormData();
-          formData.append("image", values.image);
-            // handleSubmitToServer({ image: formData });
-          handleCreateProduct(values, { image: formData });
+          if (values.image instanceof File) formData.append("image", values.image);
+          handleUpdateProduct(values, { image: formData });
           setSubmitting(false);
           resetForm();
         }}
         validationSchema={validationSchema}
-        initialValues={{
-          category: {
-            name: "Amazon",
-            icon: "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1693342954-rincon-3-64ee5ca62e001.jpg?crop=1xw:1xh;center,top&resize=980:*",
-          },
-          name: "",
-          // category: "Amazon ",
-          desc: "",
-          image: undefined,
-          price: 0,
-          quantity: 0,
-        }}
+        initialValues={initialValues}
       >
         {({ isSubmitting, setFieldValue }) => (
-          <div className="w-full flex justify-center  items-center">
-            <Form className=" flex m-[30px] flex-col gap-4 bg-slate-50 p-10">
+          <div className="w-full flex justify-center items-center">
+            <Form className="flex m-[30px] flex-col gap-4 bg-slate-50 p-10">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name">Product Name: </label>
@@ -101,43 +88,41 @@ const CreateProductForm = () => {
                   />
                   <ErrorMessage name="name" component="div" className="text-red-500" />
                 </div>
-                {/* <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="category">Category: </label>
                   <Field
-                    placeholder="Amazon"
+                    placeholder="Category"
                     className={fieldStyle}
                     name="category"
                     type="text"
                   />
                   <ErrorMessage name="category" component="div" className="text-red-500" />
-                </div> */}
+                </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="price">Price: </label>
-                  <Field
-                    placeholder="100"
-                    className={fieldStyle}
-                    name="price"
-                    type="number"
-                  />
-                  <ErrorMessage name="price" component="div" className="text-red-500" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="quantity">Quantity: </label>
-                  <Field
-                    placeholder="1"
-                    className={fieldStyle}
-                    name="quantity"
-                    type="number"
-                  />
-                  <ErrorMessage name="quantity" component="div" className="text-red-500" />
-                </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="price">Price: </label>
+                <Field
+                  placeholder="100"
+                  className={fieldStyle}
+                  name="price"
+                  type="number"
+                />
+                <ErrorMessage name="price" component="div" className="text-red-500" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="quantity">Quantity: </label>
+                <Field
+                  placeholder="1"
+                  className={fieldStyle}
+                  name="quantity"
+                  type="number"
+                />
+                <ErrorMessage name="quantity" component="div" className="text-red-500" />
               </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="desc">Description: </label>
                 <Field
-                  placeholder=""
+                  placeholder="Product description"
                   className={fieldStyle}
                   name="desc"
                   type="text"
@@ -150,7 +135,6 @@ const CreateProductForm = () => {
                     name="image"
                     className={fieldStyle}
                     type="file"
-                    title="Select a file"
                     setFieldValue={setFieldValue}
                     component={CustomInput}
                   />
@@ -160,14 +144,14 @@ const CreateProductForm = () => {
               <div className="w-full flex justify-end space-x-4">
                 <button
                   type="submit"
-                  className="w-[140px]  py-3 bg-blue-600 text-white rounded-md"
+                  className="w-[140px] py-3 bg-blue-600 text-white rounded-md"
                   disabled={isSubmitting}
                 >
-                  Create 
+                  Update
                 </button>
                 <button
                   type="reset"
-                  className="w-[100px]  py-3 bg-red-600 text-white rounded-md"
+                  className="w-[100px] py-3 bg-red-600 text-white rounded-md"
                   disabled={false}
                 >
                   Cancel
@@ -180,18 +164,18 @@ const CreateProductForm = () => {
     </div>
   );
 };
-export default CreateProductForm;
+export default UpdateProductForm;
 
 function CustomInput({ field, form, setFieldValue, ...props }: any) {
-  const [previewImage, setPreviewImage] = useState<string | undefined>(
-    undefined
-  );
+  const [previewImage, setPreviewImage] = useState<string | undefined>(props.initialPreview || undefined);
   const name = field.name;
-  const onChange: any = (event: any) => {
-    console.log("event:", event.currentTarget.files);
-    const file = event.currentTarget.files[0];
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files?.[0];
     setFieldValue(name, file);
-    setPreviewImage(URL.createObjectURL(file));
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+    }
   };
 
   return (
@@ -206,7 +190,7 @@ function CustomInput({ field, form, setFieldValue, ...props }: any) {
         <Image
           className="rounded-md"
           src={previewImage}
-          alt="preview Image"
+          alt="Preview Image"
           width={100}
           height={100}
         />

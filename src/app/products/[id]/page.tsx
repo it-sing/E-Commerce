@@ -3,8 +3,8 @@ import Image  from "next/image";
 import React from "react";
 import { BiSolidCartAdd } from "react-icons/bi";
 interface Product {
-  name: string;
-  desc: string;
+  title: string;
+  description: string;
   image: string;
   price: number;
   category: string;
@@ -16,7 +16,7 @@ interface ParamProps {
 }
 async function getDetail(id: number): Promise<Product> {
   try {
-    const response = await fetch(`https://store.istad.co/api/products/${id}`);
+    const response = await fetch(`https://fakestoreapi.com/products/${id}`);
     if (!response.ok) {
       throw new Error('Failed to fetch product details');
     }
@@ -32,9 +32,9 @@ export async function generateMetadata({ params }: ParamProps): Promise<any> {
   try {
     const product = await getDetail(id);
     return {
-      title: product?.name,
+      title: product?.title,
       price: product?.price,
-      description: product.desc,
+      description: product.description,
       category: product?.category,
       images: [product.image], 
 
@@ -53,9 +53,9 @@ async function ProductPage({ params }: ParamProps) {
       <div className="flex justify-evenly mt-16 ">
         <div className="w-[600px] h-full">
           <p className="font-bold  text-sm uppercase ">{productDetail.category}</p>
-          <h1 className="font-extrabold text-2xl">{productDetail.name}</h1>
+          <h1 className="font-extrabold text-2xl">{productDetail.title}</h1>
           
-          <p className="text-sm text-gray-900 font-bold leading-loose my-5">{productDetail.desc}</p>
+          <p className="text-sm text-gray-900 font-bold leading-loose my-5">{productDetail.description}</p>
           <div className=" flex items-center space-x-4">
             <p className=" font-bold text-xl">${productDetail.price}</p>
             <div className="flex items-center mt-5 mb-5">
@@ -87,9 +87,9 @@ async function ProductPage({ params }: ParamProps) {
         <div>
         <Image
             src={productDetail.image}
-            alt={productDetail.name}
-            width={600}
-            height={600}
+            alt={productDetail.title}
+            width={300}
+            height={400}
           />
         </div>
       </div>

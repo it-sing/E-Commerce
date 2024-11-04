@@ -3,7 +3,8 @@ import { BiSolidCartAdd } from "react-icons/bi";
 import {Card ,Image , CardHeader , CardBody , CardFooter} from "@nextui-org/react";
 import { ProductType } from "@/types/product";
 import { Button } from "@nextui-org/react";
-export default function CardComponent({name, image , price , desc}: ProductType) {
+import { title } from "process";
+export default function CardComponent({title, image , price , description}: ProductType) {
   return (
     <Card  className="py-4 w-[310px] ">
       <CardBody  className="overflow-visible py-2">
@@ -15,10 +16,10 @@ export default function CardComponent({name, image , price , desc}: ProductType)
           height={200 }
         /> 
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-          <h4 className="font-bold text-large line-clamp-1">{name}</h4>       
+          <h4 className="font-bold text-large line-clamp-1">{title}</h4>       
         </CardHeader>
         <CardFooter className=" h-[50px] flex justify-between px-4 ">
-        <h6 className="line-clamp-2 ">{desc}</h6>
+        <h6 className="line-clamp-2 ">{description}</h6>
         </CardFooter>       
         <div className="mt-2 flex justify-between items-center mx-5">
           <small className=" text-xl font-bold text-gray-900 dark:text-white">${price}</small>

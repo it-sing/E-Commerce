@@ -3,7 +3,7 @@ import CreateProductForm from '@/components/forms/CreateProduct'
 export default function CreateProduct() {
   return (
     <div className='flex justify-center'>
-    <CreateProductForm/>
+    <CreateProductForm productId={''} initialValues={undefined}/>
   </div>
   )
 }

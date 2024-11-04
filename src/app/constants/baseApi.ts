@@ -1,1 +1,1 @@
-export const base_URI_Api = "https://store.istad.co/api/"
+export const base_URI_Api = "https://fakestoreapi.com/products"

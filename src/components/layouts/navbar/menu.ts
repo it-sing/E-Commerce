@@ -4,8 +4,8 @@ export const navbarItem = [
         path : "/"
     },
     {
-        title : "Product",
-        path : "/product"
+        title : "Products",
+        path : "/products"
     },
     {
         title : "About",
